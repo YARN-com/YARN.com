@@ -63,15 +63,14 @@ function Home() {
           {threads.map((thread) => (
             <div key={thread._id} className="card">
               <h2>
-                <Link 
+                <Link
                   to={`/threads/${thread._id}`}
-                  style={{ color: '#2c3e50', textDecoration: 'none' }}
+                  style={{ color: 'var(--color-header)', textDecoration: 'none' }}
                 >
                   {thread.title}
                 </Link>
               </h2>
               <p>{thread.description}</p>
-              
               {thread.tags && thread.tags.length > 0 && (
                 <div className="tags">
                   {thread.tags.map((tag, index) => (
@@ -81,17 +80,15 @@ function Home() {
                   ))}
                 </div>
               )}
-
               <div className="thread-meta">
                 Created on {formatDate(thread.createdAt)}
               </div>
-
               <div style={{ marginTop: '1rem' }}>
                 <Link to={`/threads/${thread._id}`} className="btn">
                   View Thread
                 </Link>
-                <Link 
-                  to={`/threads/${thread._id}/add-strand`} 
+                <Link
+                  to={`/threads/${thread._id}/add-strand`}
                   className="btn btn-secondary"
                   style={{ marginLeft: '1rem' }}
                 >

@@ -19,7 +19,7 @@ function ThreadView() {
         axios.get(`/api/threads/${id}`),
         axios.get(`/api/strands/thread/${id}`)
       ]);
-      
+
       setThread(threadResponse.data);
       setStrands(strandsResponse.data);
     } catch (err) {
@@ -56,14 +56,13 @@ function ThreadView() {
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <Link to="/" className="btn btn-secondary">
-          ← Back to All Threads
+           Back to All Threads
         </Link>
       </div>
 
       <div className="card">
-        <h1>{thread.title}</h1>
+        <h1 style={{ color: 'var(--color-header)' }}>{thread.title}</h1>
         <p>{thread.description}</p>
-        
         {thread.tags && thread.tags.length > 0 && (
           <div className="tags">
             {thread.tags.map((tag, index) => (
@@ -73,11 +72,9 @@ function ThreadView() {
             ))}
           </div>
         )}
-
         <div className="thread-meta">
           Created on {formatDate(thread.createdAt)}
         </div>
-
         <div style={{ marginTop: '1rem' }}>
           <Link to={`/threads/${id}/add-strand`} className="btn">
             Add Your Story to This Thread
@@ -87,7 +84,7 @@ function ThreadView() {
 
       <div style={{ marginTop: '2rem' }}>
         <h2>Community Stories ({strands.length})</h2>
-        
+
         {strands.length === 0 ? (
           <div className="card">
             <p>No stories have been shared yet. Be the first to contribute!</p>
