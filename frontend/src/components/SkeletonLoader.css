@@ -1,0 +1,412 @@
+/* Skeleton Base Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Base Skeleton Styles */
+.skeleton-base {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.skeleton-card {
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.skeleton-card .skeleton-base {
+  background: linear-gradient(90deg, #f8f9fa 25%, #e9ecef 50%, #f8f9fa 75%);
+  background-size: 200px 100%;
+}
+
+/* Loading Spinner Styles */
+.loading-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-circle {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  animation: spinner-rotate 1s linear infinite;
+}
+
+/* Spinner Sizes */
+.spinner-small .spinner-circle {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.spinner-medium .spinner-circle {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+}
+
+.spinner-large .spinner-circle {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+/* Spinner Colors */
+.spinner-primary .spinner-circle {
+  border-top-color: #2563eb;
+  border-right-color: #2563eb;
+}
+
+.spinner-secondary .spinner-circle {
+  border-top-color: #64748b;
+  border-right-color: #64748b;
+}
+
+.spinner-white .spinner-circle {
+  border-top-color: #ffffff;
+  border-right-color: #ffffff;
+}
+
+/* Thread Card Skeleton Specific Styles */
+.skeleton-card.thread-card {
+  animation: fade-in 0.5s ease-out;
+}
+
+.skeleton-thread-title {
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-description {
+  margin-bottom: 1rem;
+}
+
+.skeleton-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Strand Card Skeleton Specific Styles */
+.skeleton-card.strand-card {
+  animation: slide-in 0.5s ease-out;
+}
+
+.skeleton-content {
+  line-height: 1.7;
+}
+
+.skeleton-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Button Loading States */
+.btn-loading-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Loading Overlay */
+.form-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.form-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.form-loading-message {
+  margin: 0;
+  color: #374151;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Page Loading State */
+.page-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.page-loading-message {
+  margin: 0;
+  color: #64748b;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Smooth Transitions for Content Loading */
+.content-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.content-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.content-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.content-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Staggered Animation for Lists */
+.skeleton-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.skeleton-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.skeleton-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.skeleton-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.skeleton-card:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+/* Loading State Improvements */
+.loading-state-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.loading-fade-out {
+  animation: fade-out 0.3s ease forwards;
+}
+
+.content-fade-in {
+  animation: fade-in 0.5s ease forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Enhanced hover effects for loaded content */
+.loaded-content .card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loaded-content .thread-card:hover,
+.loaded-content .strand-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive Design for Skeletons */
+@media (max-width: 768px) {
+  .skeleton-tags {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .skeleton-badge {
+    position: static;
+    margin-top: 1rem;
+    align-self: flex-end;
+  }
+  
+  .form-loading-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .page-loading-state {
+    padding: 2rem 1rem;
+  }
+  
+  .page-loading-message {
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode skeleton support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  .skeleton-base {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  }
+  
+  .skeleton-card .skeleton-base {
+    background: linear-gradient(90deg, #1e1e1e 25%, #2e2e2e 50%, #1e1e1e 75%);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-base {
+    animation: skeleton-pulse 2s infinite;
+  }
+  
+  .spinner-circle {
+    animation: none;
+    border: 2px solid #2563eb;
+    border-top-color: transparent;
+  }
+  
+  .skeleton-card {
+    animation: none;
+  }
+}
+
+/* Focus management for loading states */
+.loading-spinner:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Loading state for specific components */
+.thread-loading .threads-grid {
+  pointer-events: none;
+}
+
+.strand-loading .strands-container {
+  pointer-events: none;
+}
+
+/* Smooth height transitions */
+.loading-container {
+  transition: height 0.3s ease;
+}
+
+/* Loading progress indicators */
+.loading-progress {
+  width: 100%;
+  height: 4px;
+  background: #f1f5f9;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.loading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 2px;
+  animation: loading-progress 2s ease-in-out infinite;
+}
+
+@keyframes loading-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Transition wrapper */
+.transition-wrapper {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.transition-wrapper.content-fade-in {
+  animation: fade-in 0.3s ease forwards;
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ThreadDetailSkeleton, StrandsListSkeleton } from '../components/SkeletonLoader';
 
 function ThreadView() {
   const { id } = useParams();
@@ -8,13 +9,16 @@ function ThreadView() {
   const [strands, setStrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     fetchThreadAndStrands();
-  }, [id]);
+  }, [id, retryCount]);
 
   const fetchThreadAndStrands = async () => {
     try {
+      setLoading(true);
+      setError('');
       const [threadResponse, strandsResponse] = await Promise.all([
         axios.get(`/api/threads/${id}`),
         axios.get(`/api/strands/thread/${id}`)
@@ -30,6 +34,10 @@ function ThreadView() {
     }
   };
 
+  const handleRetry = () => {
+    setRetryCount(prev => prev + 1);
+  };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -41,11 +49,41 @@ function ThreadView() {
   };
 
   if (loading) {
-    return <div className="loading">Loading thread...</div>;
+    return (
+      <div>
+        <div style={{ marginBottom: '2rem' }}>
+          <Link to="/" className="btn btn-secondary">
+            ← Back to All Threads
+          </Link>
+        </div>
+
+        <ThreadDetailSkeleton />
+
+        <div className="strands-section">
+          <div className="section-header">
+            <h2 className="strands-title">Community Stories</h2>
+            <span className="strand-count">(...)</span>
+          </div>
+          
+          <StrandsListSkeleton count={3} />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <div className="error">
+        {error}
+        <button 
+          onClick={handleRetry} 
+          className="btn btn-secondary" 
+          style={{ marginLeft: '1rem', padding: '0.5rem 1rem' }}
+        >
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   if (!thread) {
@@ -56,12 +94,12 @@ function ThreadView() {
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <Link to="/" className="btn btn-secondary">
-           Back to All Threads
+          ← Back to All Threads
         </Link>
       </div>
 
-      <div className="card">
-        <h1 style={{ color: 'var(--color-header)' }}>{thread.title}</h1>
+      <div className="card content-fade-in">
+        <h1>{thread.title}</h1>
         <p>{thread.description}</p>
         {thread.tags && thread.tags.length > 0 && (
           <div className="tags">
@@ -82,27 +120,45 @@ function ThreadView() {
         </div>
       </div>
 
-      <div style={{ marginTop: '2rem' }}>
-        <h2>Community Stories ({strands.length})</h2>
-
+      <div className="strands-section">
+        <div className="section-header">
+          <h2 className="strands-title">Community Stories</h2>
+          <span className="strand-count">({strands.length})</span>
+        </div>
+        
         {strands.length === 0 ? (
-          <div className="card">
-            <p>No stories have been shared yet. Be the first to contribute!</p>
-            <Link to={`/threads/${id}/add-strand`} className="btn">
-              Share Your Story
-            </Link>
+          <div className="card empty-state">
+            <div className="empty-state-content">
+              <p>No stories have been shared yet. Be the first to contribute!</p>
+              <Link to={`/threads/${id}/add-strand`} className="btn">
+                Share Your Story
+              </Link>
+            </div>
           </div>
         ) : (
-          <div>
-            {strands.map((strand) => (
-              <div key={strand._id} className="card strand">
-                <div className="strand-meta">
-                  <strong>{strand.contributorName}</strong> shared on {formatDate(strand.createdAt)}
+          <div className="strands-container loaded-content">
+            {strands.map((strand, index) => (
+              <div key={strand._id} className={`card strand-card content-fade-in`} style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className="strand-header">
+                  <div className="strand-contributor">
+                    <span className="contributor-name">{strand.contributorName}</span>
+                    <span className="contribution-label">shared their story</span>
+                  </div>
+                  <div className="strand-timestamp">
+                    {formatDate(strand.createdAt)}
+                  </div>
                 </div>
+                
+                <div className="strand-separator"></div>
+                
                 <div className="strand-content">
                   {strand.content.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
+                    <p key={index} className="strand-paragraph">{paragraph}</p>
                   ))}
+                </div>
+                
+                <div className="strand-number">
+                  Story #{index + 1}
                 </div>
               </div>
             ))}
