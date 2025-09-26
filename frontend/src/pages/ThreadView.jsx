@@ -23,7 +23,7 @@ function ThreadView() {
         axios.get(`/api/threads/${id}`),
         axios.get(`/api/strands/thread/${id}`)
       ]);
-      
+
       setThread(threadResponse.data);
       setStrands(strandsResponse.data);
     } catch (err) {
@@ -101,7 +101,6 @@ function ThreadView() {
       <div className="card content-fade-in">
         <h1>{thread.title}</h1>
         <p>{thread.description}</p>
-        
         {thread.tags && thread.tags.length > 0 && (
           <div className="tags">
             {thread.tags.map((tag, index) => (
@@ -111,11 +110,9 @@ function ThreadView() {
             ))}
           </div>
         )}
-
         <div className="thread-meta">
           Created on {formatDate(thread.createdAt)}
         </div>
-
         <div style={{ marginTop: '1rem' }}>
           <Link to={`/threads/${id}/add-strand`} className="btn">
             Add Your Story to This Thread

@@ -132,8 +132,8 @@ function Home() {
                 <Link to={`/threads/${thread._id}`} className="btn btn-primary">
                   View Thread
                 </Link>
-                <Link 
-                  to={`/threads/${thread._id}/add-strand`} 
+                <Link
+                  to={`/threads/${thread._id}/add-strand`}
                   className="btn btn-secondary"
                 >
                   Add Your Story

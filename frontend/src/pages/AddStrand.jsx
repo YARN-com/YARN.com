@@ -176,10 +176,9 @@ function AddStrand() {
         <p>Share your experience with: <strong>{thread.title}</strong></p>
       </div>
 
-      <div className="card" style={{ marginBottom: '2rem', backgroundColor: '#f8f9fa' }}>
+      <div className="card" style={{ marginBottom: '2rem', backgroundColor: 'var(--color-card-bg)', color: 'var(--color-text)' }}>
         <h3>Thread Description</h3>
         <p>{thread.description}</p>
-        
         {thread.tags && thread.tags.length > 0 && (
           <div className="tags">
             {thread.tags.map((tag, index) => (
@@ -262,7 +261,7 @@ function AddStrand() {
         </form>
       </div>
 
-      <div className="card" style={{ marginTop: '2rem', backgroundColor: '#f8f9fa' }}>
+      <div className="card" style={{ marginTop: '2rem', backgroundColor: 'var(--color-card-bg)', color: 'var(--color-text)' }}>
         <h3>Sharing Guidelines</h3>
         <ul>
           <li>Share authentic, personal experiences related to the thread topic</li>

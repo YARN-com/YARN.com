@@ -254,7 +254,7 @@ function CreateThread() {
         </form>
       </div>
 
-      <div className="card" style={{ marginTop: '2rem', backgroundColor: '#f8f9fa' }}>
+      <div className="card" style={{ marginTop: '2rem', backgroundColor: 'var(--color-card-bg)', color: 'var(--color-text)' }}>
         <h3>Tips for Creating Great Threads</h3>
         <ul>
           <li>Choose a specific, focused topic that encourages personal stories</li>
