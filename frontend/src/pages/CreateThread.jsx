@@ -7,7 +7,7 @@ function CreateThread() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
+    description: '', 
     tags: ''
   });
   const [loading, setLoading] = useState(false);
