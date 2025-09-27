@@ -1,3 +1,4 @@
+@import "tailwindcss";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -725,120 +726,167 @@ body:not(.dark) .empty-state {
 }
 
 .page-header {
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-body.dark .page-header {
-  border-bottom-color: #374151;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .page-header h1 {
-  margin: 0 0 0.75rem 0;
-  color: var(--color-header);
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .page-header p {
-  margin: 0;
-  color: var(--color-meta);
-  font-size: 1.125rem;
-  line-height: 1.6;
-  max-width: 60ch;
+  font-size: 1rem;
+  opacity: 0.9;
 }
 
-@media (max-width: 768px) {
-  .navbar-content {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .navbar nav {
-    gap: 1rem;
-  }
-
-  .container {
-    padding: 0 10px;
-  }
-  
-  .page-header h1 {
-    font-size: 1.875rem;
-  }
-  
-  .page-header p {
-    font-size: 1rem;
-  }
-  
-  .thread-actions {
-    flex-direction: column;
-  }
-  
-  .strand-header {
-    flex-direction: column;
-    align-items: start;
-    gap: 0.75rem;
-    padding-right: 0; /* Remove padding on mobile since story badge moves below */
-  }
-  
-  .strand-number {
-    position: static;
-    align-self: flex-end;
-    margin-top: 1rem;
-  }
-  
-  .strand-timestamp {
-    margin-right: 0; /* Remove margin on mobile */
-  }
-  
-  .thread-title {
-    font-size: 1.25rem;
-  }
-  
-  .strands-title {
-    font-size: 1.5rem;
-  }
-  
-  .form-input {
-    padding: 0.75rem;
-    font-size: 0.9375rem;
-  }
-  
-  .validation-icon {
-    right: 0.75rem;
-    font-size: 1rem;
-  }
-  
-  .form-input.valid {
-    padding-right: 2.5rem;
-  }
-  
-  .error-message,
-  .field-hint {
-    font-size: 0.75rem;
-  }
-  
-  /* Ensure error messages are visible on mobile */
-  .error-message {
-    color: #dc2626 !important;
-    font-weight: 600 !important;
-    background: transparent !important;
-  }
+/* ===========================
+   Buttons
+   =========================== */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-/* Universal error message visibility override - highest priority */
-html body * .error-message,
-html body div.error-message,
-html body .form-group .error-message,
-html body .card .error-message {
-  color: #b91c1c !important;
-  background-color: transparent !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-  font-weight: 600 !important;
-  visibility: visible !important;
-  display: block !important;
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #1e40af;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+
+.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state h3 {
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.empty-state p {
+  margin-bottom: 1rem;
+  color: #6b7280;
+}
+
+.threads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+
+.card.thread-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+.card.thread-card .thread-title {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  color: #111827;
+}
+
+.thread-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.thread-title-link:hover {
+  color: #2563eb;
+}
+
+.thread-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+
+.thread-description {
+  color: #374151;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.thread-tags {
+  margin-top: 0.5rem;
+}
+
+.thread-tags .tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.thread-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
