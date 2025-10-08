@@ -5,9 +5,21 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
+// Security middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })); // Limit payload size
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Prevent parameter pollution
+app.use((req, res, next) => {
+  // Simple parameter pollution prevention
+  for (const key in req.query) {
+    if (Array.isArray(req.query[key])) {
+      req.query[key] = req.query[key][req.query[key].length - 1];
+    }
+  }
+  next();
+});
 
 // Routes
 const threadsRoutes = require('./routes/threads');
@@ -19,6 +31,38 @@ app.use('/api/strands', strandsRoutes);
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to YARN.com - Community Story Threads API' });
+});
+
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Global error:', err);
+  
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({
+      message: 'Invalid JSON format',
+      error: 'Malformed request body'
+    });
+  }
+  
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({
+      message: 'Request entity too large',
+      error: 'Payload exceeds maximum size limit'
+    });
+  }
+  
+  res.status(500).json({
+    message: 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    message: 'Route not found',
+    path: req.originalUrl
+  });
 });
 
 // MongoDB connection
