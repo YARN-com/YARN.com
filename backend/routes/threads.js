@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Thread = require('../models/Thread');
+const Thread = require("../models/Thread");
+const { getLimiter, postLimiter } = require("../middleware/rateLimiters.js");
 
 // GET /api/threads - Get all threads
-router.get('/', async (req, res) => {
+router.get("/", getLimiter, async (req, res) => {
   try {
     const threads = await Thread.find().sort({ createdAt: -1 });
     res.json(threads);
@@ -13,11 +14,11 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/threads/:id - Get a single thread
-router.get('/:id', async (req, res) => {
+router.get("/:id", getLimiter, async (req, res) => {
   try {
     const thread = await Thread.findById(req.params.id);
     if (!thread) {
-      return res.status(404).json({ message: 'Thread not found' });
+      return res.status(404).json({ message: "Thread not found" });
     }
     res.json(thread);
   } catch (error) {
@@ -26,18 +27,20 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/threads - Create a new thread
-router.post('/', async (req, res) => {
+router.post("/", postLimiter, async (req, res) => {
   try {
     const { title, description, tags } = req.body;
-    
+
     if (!title || !description) {
-      return res.status(400).json({ message: 'Title and description are required' });
+      return res
+        .status(400)
+        .json({ message: "Title and description are required" });
     }
 
     const thread = new Thread({
       title,
       description,
-      tags: tags || []
+      tags: tags || [],
     });
 
     const savedThread = await thread.save();
