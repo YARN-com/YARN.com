@@ -1,12 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Strand = require('../models/Strand');
+const Strand = require("../models/Strand");
+const { getLimiter, postLimiter } = require("../middleware/rateLimiters.js");
 
 // GET /api/strands/thread/:threadId - Get all strands for a specific thread
-router.get('/thread/:threadId', async (req, res) => {
+router.get("/thread/:threadId", getLimiter, async (req, res) => {
   try {
-    const strands = await Strand.find({ threadId: req.params.threadId })
-      .sort({ createdAt: 1 });
+    const strands = await Strand.find({ threadId: req.params.threadId }).sort({
+      createdAt: 1,
+    });
     res.json(strands);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,20 +16,20 @@ router.get('/thread/:threadId', async (req, res) => {
 });
 
 // POST /api/strands - Create a new strand
-router.post('/', async (req, res) => {
+router.post("/", postLimiter, async (req, res) => {
   try {
     const { threadId, contributorName, content } = req.body;
-    
+
     if (!threadId || !contributorName || !content) {
-      return res.status(400).json({ 
-        message: 'Thread ID, contributor name, and content are required' 
+      return res.status(400).json({
+        message: "Thread ID, contributor name, and content are required",
       });
     }
 
     const strand = new Strand({
       threadId,
       contributorName,
-      content
+      content,
     });
 
     const savedStrand = await strand.save();
